@@ -58,6 +58,7 @@ struct Node *deleteNode(struct Node *node, int data) {
       printf("Node deleted with data %d\n", data);
       break;
     }
+    current = current->next;
   }
   return node;
 }
