@@ -7,7 +7,6 @@ struct Node {
 };
 
 struct Node *createNodeEnd(struct Node *node, int data) {
-
   // If the tree/linked list has not been created it will return
   if (node == NULL) {
     printf("The tree has not been initiated\n");
@@ -36,7 +35,6 @@ struct Node *createNodeEnd(struct Node *node, int data) {
   return node;
 }
 
-
 struct Node *deleteNode(struct Node *node, int data) {
   if (node == NULL) {
     printf("The tree has not been initiated\n");
@@ -44,28 +42,28 @@ struct Node *deleteNode(struct Node *node, int data) {
   }
 
   struct Node *current = node;
+
   if (current->data == data) {
-    node = node->next;
+    node = current->next;
     free(current);
     printf("Node deleted with data %d\n", data);
     return node;
   }
+
   while (current->next != NULL) {
     if (current->next->data == data) {
-      free(current->next);
-      current->next = NULL;
+        struct Node* temp = current->next;
+        current->next = temp->next;
+        free(temp);
       printf("Node deleted with data %d\n", data);
       break;
     }
-    current = current->next;
   }
-  printf("The node with data %d could not be found.\n", data);
   return node;
 }
 
 void printList(struct Node *node) {
-  struct Node *curr = malloc(sizeof(struct Node));
-  curr = node;
+  struct Node *curr = node;
   while (curr->next != NULL) {
     printf("Current node %d\n", curr->data);
     curr = curr->next;
@@ -87,6 +85,7 @@ struct Node *createNodeBeginning(struct Node *node, int data) {
 }
 
 int main() {
+
   printf("Program has started\n");
   struct Node *head;
   head = malloc(sizeof(struct Node));
@@ -94,10 +93,12 @@ int main() {
   head->next = NULL;
 
   createNodeEnd(head, 3);
+  createNodeEnd(head, 5);
+  createNodeEnd(head, 7);
   head = createNodeBeginning(head, 1);
   printList(head);
-  head = deleteNode(head, 3);
-  printList(head);
   head = deleteNode(head, 1);
+  printList(head);
+  head = deleteNode(head, 3);
   printList(head);
 }
